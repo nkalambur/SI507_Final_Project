@@ -46,7 +46,7 @@ After you have (1) downloaded all required files, (2) pip installed from the req
 - https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets.html
 - http://textblob.readthedocs.io/en/dev/index.html
 - https://plot.ly/python/
-- Additionally, I received help from Anand Doshi on re-thinking how to modify my data & credentials caching set up given how frequently the source API data would change. As such, I decided on 10 hours expiration of access tokens and updated that used in the class OAuth twitter example. 
+- Additionally, I received help from Anand Doshi on re-thinking how to modify my data & credentials caching set up given how frequently the source API data would change. As such, I decided on 10 hours expiration of access tokens and updated the code used in the class OAuth twitter example. 
 - Finally, I built on/modified some of the code from my project 6 to establish the postgres/psycopg2 database connection and set up the db.
 
   
