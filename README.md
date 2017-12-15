@@ -43,6 +43,8 @@ After you have (1) downloaded all required files, (2) pip installed from the req
     - The visuals, based on the datasets I passed them in the past few days, did indicate that the more negative President Trump's tweets were, the higher the average reteweet count was. The retweet counts for tweets that mention "Donald Trump" seemed reasonably varied with sentiment score. 
   - After the code hits this part of the code, the browser should pop open and you should see two tabs with the visuals. Again, you do not need to be logged in to view these, though you may have to click "x" or "cancel" on a pop up from plotly asking you to sign up/in (if you don't want to sign in). Screenshots have been included in this repo. 
   
+Finally, the SI507F17_finalproject_tests.py runs 15 or so tests to ensure the code is excuted properly. Some additional notes, after creating the database mentioned above, you may have to execute: "pg_ctl -D /usr/local/var/postgres start" or something similar to kick start the sql server. Similarly, if any sql queries hang (or fail to execute in a timely manner), you can also run "pg_ctl -D /usr/local/var/postgres stop" then "pg_ctl -D /usr/local/var/postgres start" again to re-start the server. 
+  
 # Resources
 - https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets.html
 - http://textblob.readthedocs.io/en/dev/index.html
