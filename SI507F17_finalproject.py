@@ -121,12 +121,12 @@ def set_in_creds_cache(identifier, data, expire_in_hrs):
 
 #### BEGIN CODE TO FETCH DATA FROM API OR CACHE ####
 
-## OAuth1 API Constants - vary by API
-### Private data in a hidden secret_data.py file
-CLIENT_KEY = secret_data.client_key # what Twitter calls Consumer Key
-CLIENT_SECRET = secret_data.client_secret # What Twitter calls Consumer Secret
+### Private data in a secret_data.py file
+### PLEASE POPULATE THIS FILE IF YOU HAVE NOT ALREADY DONE SO
+CLIENT_KEY = secret_data.client_key 
+CLIENT_SECRET = secret_data.client_secret
 
-### Specific to API URLs, not private
+### Specific to API URLs, not private -- THESE ARE TWITTER SPECIFIC TO FETCH TOKENS
 REQUEST_TOKEN_URL = "https://api.twitter.com/oauth/request_token"
 BASE_AUTH_URL = "https://api.twitter.com/oauth/authorize"
 ACCESS_TOKEN_URL = "https://api.twitter.com/oauth/access_token"
@@ -146,7 +146,6 @@ def get_tokens(client_key=CLIENT_KEY, client_secret=CLIENT_SECRET,request_token_
     # Open the auth url in browser:
     webbrowser.open(auth_url) # For user to interact with & approve access of this app -- enter verifier provided by twitter
 
-    # Deal with required input, which will vary by API
     if verifier_auto: # if the input is default (True), like Twitter
         verifier = input("Please input the verifier:  ")
     else:
@@ -157,7 +156,7 @@ def get_tokens(client_key=CLIENT_KEY, client_secret=CLIENT_SECRET,request_token_
     # Regenerate instance of oauth1session class with more data
     oauth_inst = requests_oauthlib.OAuth1Session(client_key, client_secret=client_secret, resource_owner_key=resource_owner_key, resource_owner_secret=resource_owner_secret, verifier=verifier)
 
-    oauth_tokens = oauth_inst.fetch_access_token(access_token_url) # returns a dictionary
+    oauth_tokens = oauth_inst.fetch_access_token(access_token_url)
 
     # Use that dictionary to get these things
     # Tuple assignment syntax
@@ -187,7 +186,7 @@ def create_request_identifier(url, params_diction):
     return total_ident.upper() # Creating the identifier
 
 def get_twitter_data(request_url,service_ident, params_diction, expire_in_hrs=10):
-    """Check in cache, if not found, load data, save in cache and then return that data"""
+    """Check in cache first, otherwise fetch it from api and save in cache and then return that data"""
     ident = create_request_identifier(request_url, params_diction)
     data = get_from_cache(ident,CACHE_DICTION)
     if data:
@@ -213,6 +212,7 @@ def get_twitter_data(request_url,service_ident, params_diction, expire_in_hrs=10
 
 #### BEGIN CODE TO DEFINE CLASS TO PROCESS DATA FETCHED FROM TWITTER ####
 
+### CLASS TO TRANSFORM TWITTER RESULTS INTO OBJECT FOR EASE OF MIGRATION TO SQL ###
 class twitter_handler(object):
 	def __init__(self, dict_object):
 		self.text = dict_object['text']
@@ -225,6 +225,7 @@ class twitter_handler(object):
 		self.hashtags = [x for x in dict_object['entities']['hashtags']]
 		self.timestamp_UTC = dict_object['created_at']
 
+### UTILIZE TEXTBLOB TO GET SENTIMENT SCORE ###
 	def get_sentiment_score(self):
 		# leverage textblob.TextBlob PatternAnalyzer approach
 		# function should return a dict of Sentiment(polarity, classification)
@@ -265,7 +266,9 @@ class twitter_handler(object):
 DB_NAME = secret_data.db_name
 DB_USER = secret_data.db_user
 DB_PASSWORD = secret_data.db_password
+
 #### CODE TO ESTABLISH CONNECTION & CURSOR #####
+#### CODE TAKEN THE MODIFIED FROM LECTURE EXAMPLE ####
 def get_connection_and_cursor(db_name, db_password, db_user):
     try:
         if db_password != "":

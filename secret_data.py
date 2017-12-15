@@ -9,8 +9,8 @@ client_secret=""
 
 # THESE ARE CREDS FOR THE DATABASE
 db_name = "SI507_Final_Project"
-db_user = "" ## PLEASE REPLACE THIS WITH THE USER NAME FOR YOUR COMPUTER
-db_password = ""
+db_user = "nikhilkalambur" ## PLEASE REPLACE THIS WITH THE USER NAME FOR YOUR COMPUTER
+db_password = "" ## FEEL FREE TO KEEP THIS BLANK
 
 # THESE ARE CREDITS FOR POSTING TO PLOTLY
 plotly_api_key = "xR42cP0jfc1IBuuz8ryp"

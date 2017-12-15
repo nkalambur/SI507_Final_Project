@@ -1,5 +1,5 @@
 import unittest
-from fp import *
+from SI507F17_finalproject import *
 from secret_data import *
 
 ## class 1
