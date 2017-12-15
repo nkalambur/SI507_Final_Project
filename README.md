@@ -2,9 +2,9 @@
 Nikhil Kalambur's Final Project Repo for SI 507
 
 # Overview
-This project pulls data from Twitter related to President Donald Trump and runs a sentiment analysis on the text of tweets. The pulls (1) the most recent 100 tweets with the search term "Donald Trump" and (2) the most recent 199 tweets posted by @realdonaldtrump. Both of these limits (100 & 199) are due to Twitter API limits on number of records per API call. 
+This project pulls data from Twitter related to President Donald Trump and runs a sentiment analysis on the text of tweets. The code pulls (1) the most recent 100 tweets with the search term "Donald Trump" and (2) the most recent 199 tweets posted by @realdonaldtrump. If the cache hasn't been expired (10 hrs), then the results may be <10 hours out of date. Both of these limits (100 & 199) are due to Twitter API limits on number of records per API call. 
 
-The code pulls these tweets from the twitter API or from a cache, processes them in a class, then migrates them to a local postgres sql database (more on this later). This class also contains a method that conducts the sentiment classification of a tweet's text using the TextBlob module, which has a trained pattern analyzer. The code then translates sentiment scores as such:
+The code pulls these tweets from the twitter API (OAuth) or from a cache, processes them in a class, then migrates them to a local postgres sql database (more on this later). This class also contains a method that conducts the sentiment classification of a tweet's text using the TextBlob module, which has a trained pattern analyzer. The code then translates sentiment scores as such:
 
 - Very Negative - Score of -1 to -.5
 - Negative - Score of -.4999 to 0
@@ -19,9 +19,10 @@ The code fetches the data, either from a cache or from the Twitter API, processe
   - In the cloned repo on your computer, Run pip install -r requirements.txt -- this will get all of the required python modules, assuming you are running this in a virtual environment. 
   - The secret_data.py file includes references to credentials needed to:
     - (1) access Twitter API via OAuth. You must update the client_key and client_secret variables in this file with your own Twitter credentials to run this code. You MUST have a twitter account and set up a developer app to access the API with your credentials. Instructions on how to do this are in the secret_data.py file. 
-    - (2) Access your local database. You must update this file with your database name and your user name for your computer. Additionally, if you would like to password protect the db, you can also insert a password. The default is for no password.  
+    - (2) Access your local database. You must update this file with your database name and your user name for your computer. Additionally, if you would like to password protect the db, you can also insert a password. The default is for no password.
+      - You must also create a database on your local postgres sql using the following command: createdb "SI507_Final_Project". You may change this to be whatever you want. If you do change this, you must update the secret_data.py file. 
     - (3) Push the visualization outputs back to my plotly account. Please note, I have included my plotly account information in case you do not have one. The code relies on valid plotly creds to actually run and push the visuals to plotly. You do not need an account to view the plotly results.
-  - You must also create a database on your local postgres sql using the following command: createdb "SI507_Final_Project". You may change this to be whatever you want. If you do change this, you must update the secret_data.py file. 
+  
   - All URLs required to access APIs and retrieve access tokens have been hard coded into SI507F17_finalproject.py
   
 # Running the code (What's happening & What to expect):
